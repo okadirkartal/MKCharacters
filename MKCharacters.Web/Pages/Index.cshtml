@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<ul id="characters-list"></ul>
+
+@section Scripts {
+<script>
+    let url = "https://localhost:7233/characters";
+    let charactersList = document.getElementById("characters-list");
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => showCharacters(data))
+        .catch(ex => {
+            alert("Error!");
+            console.error(ex);
+        });
+
+    function showCharacters(characters) {
+        characters.forEach(characters => {
+            let li = document.createElement("li");
+            let text = `${characters.name} (\$${characters.damage})`;
+            li.appendChild(
+                document.createTextNode(text));
+            charactersList.appendChild(li);
+        });
+    }
+
+</script>
+}
